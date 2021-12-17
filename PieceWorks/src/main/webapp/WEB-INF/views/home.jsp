@@ -10,10 +10,9 @@
 </h1>
 
 
-<P>  The time on the server is ${serverTime}. kiki</P>
-<P>  The time on the server is ${serverTime}. </P>
+<P>  The time on the server is ${serverTime}.</P>
+<p> 깃헙 설명회 저도 갈래요 </p>
 
-<h1>랄라랄</h1>
 
 </body>
 </html>

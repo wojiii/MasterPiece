@@ -10,6 +10,6 @@
 
 
 
-<P>  The time on the server is ${serverTime}. </P>
+<P>  The time on the server is ${serverTime}. 어라라</P>
 </body>
 </html>

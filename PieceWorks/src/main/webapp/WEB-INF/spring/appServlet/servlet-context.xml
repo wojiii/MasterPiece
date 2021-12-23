@@ -21,8 +21,8 @@
 		<beans:property name="suffix" value=".jsp" />
 	</beans:bean>
 	
-	<context:component-scan base-package="project.masterpiece.pieceworks" />
 	
+		<context:component-scan base-package="project.masterpiece.pieceworks" />
 	
 	
 </beans:beans>

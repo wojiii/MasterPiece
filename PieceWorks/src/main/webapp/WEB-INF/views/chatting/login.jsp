@@ -1,41 +1,165 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ page session="false" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+
+	pageEncoding="UTF-8"%>
+
 <html>
+
 <head>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/latest/js/bootstrap.min.js"></script>
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css" rel="stylesheet">
-	<style>
-	    body {
-	        background: #f8f8f8;
-	        padding: 60px 0;
-	    }
-	    
-	    #login-form > div {
-	        margin: 15px 0;
-	    }
-	
-	</style>
-	<title>Home</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Insert title here</title>
+
 </head>
-<div class="container">
-    <div class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-        <div class="panel panel-success">
-            <div class="panel-heading">
-                <div class="panel-title">환영합니다!</div>
-            </div>
-            <div class="panel-body">
-                <form id="login-form" method="post" action="loginProcess.ch">
-                    <div>
-                        <input type="text"  name="id"	class="form-control" name="아이디 입력" placeholder="Username" autofocus>
-                    </div>
-                    <div>
-                        <button type="submit" class="form-control btn btn-primary">로그인</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+
+<body>
+
+	<div id="one">
+
+		별명:<input type="text" id="nickname" /> <input type="button"
+
+			id="enter" value="입장" />
+
+	</div>
+
+	<div id="two" style="display: none">
+
+		<input type="button" id="exit" value="퇴장" /><br />
+
+		<div id="chatarea" style="width:400px; height:600px; border:1px solid;"></div>
+
+		<input type="text" id="message" /> <input type="button" id="send"
+
+			value="보내기" />
+
+	</div>
+
+
+
+</body>
+
+<script>
+
+	one = document.getElementById("one");
+
+	two = document.getElementById("two");
+
+
+
+	document.getElementById("enter").addEventListener("click", function() {
+
+		//웹 소켓 연결해주는 함수 호출 
+
+		connect();
+
+		
+
+	});
+
+
+
+	document.getElementById("exit").addEventListener("click", function() {
+
+		//연결을 해제해주는 함수 호출 
+
+		disconnect();
+
+	
+
+	});
+
+	document.getElementById("send").addEventListener("click", function() {
+
+		//연결을 해제해주는 함수 호출 
+
+		send();
+
+	
+
+	});
+
+	
+
+	
+
+	var websocket;
+
+	//입장 버튼을 눌렀을 때 호출되는 함수 
+
+	
+
+	function connect(){
+
+		websocket = new WebSocket("http://localhost:8220/ChattingTest/chat-ws");
+
+		//웹 소켓에 이벤트가 발생했을 때 호출될 함수 등록 
+
+		websocket.onopen = onOpen;
+
+		websocket.onmessage = onMessage;
+
+		websocket.onclose = onClose;
+
+		
+
+	}
+
+	//퇴장 버튼을 눌렀을 때 호출되는 함수 
+
+	function disconnect(){
+
+		msg = document.getElementById("nickname").value;
+
+		websocket.send(msg+"님이 퇴장하셨습니다");
+
+		websocket.close();
+
+	}
+
+	//보내기 버튼을 눌렀을 때 호출될 함수 
+
+	function send(){
+
+		nickname = document.getElementById("nickname").value;
+
+		msg = document.getElementById("message").value;
+
+		websocket.send(nickname + ":"+ msg);
+
+		document.getElementById("message").value = "";
+
+		
+
+	}	
+
+	//웹 소켓에 연결되었을 때 호출될 함수 
+
+	function onOpen(){
+
+		nickname = document.getElementById("nickname").value;
+
+		websocket.send(nickname + "님 입장하셨습니다.");
+
+	}
+
+	//웹 소켓에서 연결이 해제 되었을 때 호출될 함수 
+
+	function onMessage(evt){
+
+		data= evt.data;
+
+		chatarea = document.getElementById("chatarea");
+
+		chatarea.innerHTML = data + "<br/>" + chatarea.innerHTML
+
+	} 
+
+	function onClose(){
+
+		
+
+	}
+
+</script>
+
 </html>

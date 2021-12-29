@@ -6,9 +6,10 @@
 	</settings>
 
 	<typeAliases>
+		<typeAlias type="project.masterpiece.pieceworks.member.model.vo.Member" alias="Member"/>
 		
 	</typeAliases>
 	<mappers>
-		
+		<mapper resource="mappers/member-mapper.xml"/>
 	</mappers>
 </configuration>

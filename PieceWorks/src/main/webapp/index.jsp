@@ -9,8 +9,10 @@
 <body>
 
 <p>메인페이지</p>
-<p><button onclick="location.href='chatForm.ch'">테스트</button></p>
-<p><button onclick="location.href='login.ch'">테스트</button></p>
+<p><button onclick="location.href='chattest.ch'">실시간 채팅 테스트</button></p>
+<p><button onclick="location.href='chatForm.ch'">채팅폼</button></p>
+
+
 
 </body>
 </html> 

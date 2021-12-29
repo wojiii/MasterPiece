@@ -11,10 +11,17 @@ public class ChattingController {
 
 	//private ChattingService cService;
 	
+	
+	@RequestMapping("chattest.ch")
+	public String read() {
+		return "chattingTest";
+	}
+	
 	@RequestMapping("chatForm.ch")
 	public String chatForm() {
 		return "chattingForm";
 	}
+	
 	
 	
 	

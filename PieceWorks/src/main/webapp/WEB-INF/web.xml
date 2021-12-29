@@ -49,9 +49,8 @@
 		
 	</filter-mapping>
 	
-	<!-- 채팅  -->
-	 
-	     <servlet>
+	<!-- 채팅  --> 
+	<servlet>
         <servlet-name>chattingServlet</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <init-param>
@@ -62,6 +61,20 @@
     <servlet-mapping>
         <servlet-name>chattingServlet</servlet-name>
         <url-pattern>*.ch</url-pattern>
+    </servlet-mapping> 
+    
+	<!-- 공통 파일 --> 
+	<servlet>
+        <servlet-name>CommonServlet</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>/WEB-INF/spring/appServlet/common-context.xml</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CommonServlet</servlet-name>
+        <url-pattern>*.com</url-pattern>
     </servlet-mapping> 
 	
 	 

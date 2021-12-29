@@ -1,6 +1,4 @@
-package project.masterpiece.pieceworks.chatting.controller;
-
-
+package project.masterpiece.pieceworks.stomp.ws;
 
 
 import java.util.Date;
@@ -23,24 +21,24 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 	@Override
 	public void afterConnectionEstablished(
 			WebSocketSession session) throws Exception {
-		log(session.getId() + " 제발 연결 되라");
+		log(session.getId() + " 제발 연결");
 		users.put(session.getId(), session);
 	}
 
 	@Override
 	public void afterConnectionClosed(
 			WebSocketSession session, CloseStatus status) throws Exception {
-		log(session.getId() + " 연결 종료");
+		log(session.getId() + " 연결 종료되라ㅏㅏ");
 		users.remove(session.getId());
 	}
 
 	@Override
 	protected void handleTextMessage(
 			WebSocketSession session, TextMessage message) throws Exception {
-		log(session.getId() + "로부터 메시지 받음: " + message.getPayload());
+		log(session.getId() + "로부터 메시지 수신: " + message.getPayload());
 		for (WebSocketSession s : users.values()) {
 			s.sendMessage(message);
-			log(s.getId() + "에 메시지 보냄: " + message.getPayload());
+			log(s.getId() + "에 메시지 발송: " + message.getPayload());
 		}
 	}
 
@@ -55,4 +53,3 @@ public class ChatWebSocketHandler extends TextWebSocketHandler {
 	}
 
 }
-

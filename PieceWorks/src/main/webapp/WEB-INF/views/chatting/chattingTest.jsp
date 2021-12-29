@@ -4,13 +4,13 @@
 <head>
 <meta charset="utf-8">
 <title>채팅</title>
-<script type="text/javascript" src="resource/js/jquery-3.6.0.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 	var wsocket;
 	
 	function connect() {
 		wsocket = new WebSocket(
-				"ws://localhost:9580/example/chat-ws");
+				"ws://localhost:9580/pieceworks/chat-ws.ch");
 		wsocket.onopen = onOpen;
 		wsocket.onmessage = onMessage;
 		wsocket.onclose = onClose;

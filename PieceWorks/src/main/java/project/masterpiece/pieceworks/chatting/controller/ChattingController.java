@@ -31,6 +31,11 @@ public class ChattingController {
 	public String chatForm() {
 		return "chattingForm";
 	}
+
+	@RequestMapping("chatList.ch")
+	public String chatList() {
+		return "chattingList";
+	}
 	
 	@RequestMapping("chattingDetailForm.ch")
 	public ModelAndView chattingDetailForm(@ModelAttribute ChattingMessage c,ModelAndView mv) {

@@ -19,17 +19,17 @@
 <p><button id="chattingDetailForm">chattingDetailForm</button></p>
 
 </body>
-<<<<<<< HEAD
 <script>
 document.getElementById('chatList').onclick = function(){
 	window.open('chatList.ch', 'chattingList', 'width=500,height=460');
 }
-=======
+</script>
+
+
 <script type="text/javascript">
 	$('#chattingDetailForm').click(function(){
 		window.open("chattingDetailForm.ch?chatWriter='aaa@naver.com'&anotherUserId='bbb@naver.com'&chatNo=10","채팅","width=400,height=500","toolbat=no,menubar=no, scrollbars=no,resizable=no","_blank");
 	});
->>>>>>> cae66f62fce1120106a6005bca6f5cdecfa70668
 </script>
 </html> 
 

@@ -1,5 +1,7 @@
 package project.masterpiece.pieceworks.member.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -29,6 +31,11 @@ public class MemberController {
 		return "memberJoin";
 	}
 	
+	@RequestMapping("login.me")
+	public String loginForm() {
+		return "login";
+	}
+	
 	// 회원가입
 	@RequestMapping("insert.me")
 	public String insertMember(@ModelAttribute Member m) {
@@ -39,8 +46,10 @@ public class MemberController {
 		
 		int result = mService.insertMember(m);
 		
+		System.out.println(bcrypt); // 암호화된 pwd
+		
 		if(result > 0) {
-			return "../../../index";
+			return "redirect:login.me";
 		} else {
 			throw new MemberException("회원가입에 실패하였습니다.");
 		}
@@ -50,15 +59,22 @@ public class MemberController {
 	@RequestMapping(value="login.me", method=RequestMethod.POST)
 	public String login(Member m, Model model) {
 		
-		String encPwd = bcrypt.encode(m.getPwd());
-		m.setPwd(encPwd);
-		System.out.println(encPwd);
+		System.out.println(bcrypt); // 암호화된 pwd
 		
 		System.out.println(bcrypt.encode(m.getPwd()));
 		
 		Member loginMember = mService.memberLogin(m); 
-		return null;
 		
+//		System.out.println(loginMember);
+		
+		// 암호화 했을 때 로그인 
+		if(bcrypt.matches(m.getPwd(), loginMember.getPwd())) {
+			model.addAttribute("loginUser", loginMember);
+			return "../../../index";
+		} else {
+			throw new MemberException("로그인에 실패하였습니다.");
+		}
 	}
+	
 	
 }

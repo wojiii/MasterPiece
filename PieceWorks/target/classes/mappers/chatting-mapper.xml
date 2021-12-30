@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="chattingMapper">
+	
+	<select id="selectChattingMessageList" resultMap="ChattingMessageSet">
+		select chat_message_no, chat_message, send_time, nickname, chat_no, chat_writer
+		from chat_message
+			join member on(chat_writer = email)
+		where chat_no = #{chatNo} 
+		and (chat_writer = ${chatWriter} or chat_writer = ${anotherUserId})
+	</select>
+	<resultMap type="ChattingMessage" id="ChattingMessageSet">
+		<id column="CHAT_MESSAGE_NO" property="chatMessageNo"/>
+		<result column="CHAT_MESSAGE" property="chatMessage"/>
+		<result column="SEND_TIME" property="sendTime"/>
+		<result column="NICKNAME" property="nickName"/>
+		<result column="CHAT_NO" property="chatNo"/>
+		<result column="CHAT_WRITER" property="chatWriter"/>
+	</resultMap>
+</mapper>

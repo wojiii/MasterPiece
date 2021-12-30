@@ -15,4 +15,10 @@ public class CalendarController {
 	public String proCalView() {
 		return "calendar_p";
 	}
+	
+	@RequestMapping("calendarTest.ca")
+	public String testCal() {
+		return "testCal";
+	}
+	
 }

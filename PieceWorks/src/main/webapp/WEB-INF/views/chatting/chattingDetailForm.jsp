@@ -36,17 +36,85 @@
 			margin: 0px;
 		}
 	</style>
+	<script type="text/javascript">
+	var name
+var wsocket;
+	$(document).ready(function() {
+		name = prompt("이름입력");
+		connect();
+	});
+
+	function connect() {
+		wsocket = new WebSocket(
+				"ws://localhost:9580/pieceworks/chat-ws.ch");
+		wsocket.onopen = onOpen;
+		wsocket.onmessage = onMessage;
+		wsocket.onclose = onClose;
+	}
+	function disconnect() {
+		wsocket.close();
+	}
+	function onOpen(evt) {
+		console.log("연결되었습니다.");
+	}
+	 
+	function onMessage(evt) {
+		var data = evt.data;
+		if (data.substring(0, 4) == "msg:") {
+			appendMessage(data.substring(4));
+		}
+	}
+	function onClose(evt) {
+		appendMessage("연결을 끊었습니다.");
+	}
+	
+	function send() {
+		var msg = $(".write_msg").val();
+		wsocket.send("msg:"+name+":" + msg);
+		$(".write_msg").val("");
+	}
+
+	function appendMessage(msg) {
+		console.log(msg.substring(0,3));
+		if(msg.substring(0,3)=="첫번째"){
+			$('.msgArea').append("<div class='outgoing_msg'> <div class='sent_msg'> <p>"+msg+"</p> <span class='time_date'>" +"시간"+"</span> </div>");
+		}else{
+			$('.msgArea').append("<div class='incoming_msg'> <div class='incoming_msg_img'> <img src='https://ptetutorials.com/images/user-profile.png' alt='sunil'> </div> <div class='received_msg'> <div class='received_withd_msg'> <p>" +msg+"</p> <span class='time_date'>" +"시간"+"</span></div> </div> </div>");
+		}
+		var chatAreaHeight = $(".msg_history").height();
+		var maxScroll = $(".msgArea").height() - chatAreaHeight;
+		$(".msg_history").scrollTop(maxScroll);
+	}
+
+	$(document).ready(function() {
+		$('#message').keypress(function(event){
+			var keycode = (event.keyCode ? event.keyCode : event.which);
+			if(keycode == '13'){
+				send();	
+			}
+			event.stopPropagation();
+	
+		});
+		$('.msg_send_btn').click(function() { send(); });
+		$('#enterBtn').click(function() { connect(); });
+		$('#exitBtn').click(function() { disconnect(); });
+	});
+	
+	
+	</script>
 <head>
 
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body >
+
  <!-- 채팅목록 & 채팅창 -->
            <div class="messaging">
   <div class="inbox_msg">
 	<div class="mesgs">
 	  <div class="msg_history">
+	  <div class="msgArea">
 	  <c:forEach var="c" items="${list }">
 	 	 <c:choose>
 		  	<c:when test="${c.chatWriter eq 'aaa@naver.com'}">
@@ -83,11 +151,11 @@
 			<p>ㅇㅋㅇㅋ</p>
 			<span class="time_date"> 11:01 AM    |    Today</span> </div>
 		</div> -->
-		
+		</div>
 	  </div>
 	  <div class="type_msg">
 		<div class="input_msg_write">
-		  <input type="text" class="write_msg" placeholder="Type a message" />
+		  <input type="text" class="write_msg" placeholder="Type a message" style="width: 300px;"/>
 		  <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
 		</div>
 	  </div>

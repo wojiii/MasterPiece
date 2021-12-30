@@ -53,12 +53,12 @@
                                 	<div class="user-input">
                                     	<div class="form-group">
                                         	<input type="email" class="form-control form-control-user"
-                                                    id="email" aria-describedby="emailHelp"
+                                                    id="email" aria-describedby="emailHelp" name="email"
                                                     placeholder="이메일을 입력하세요" required>
                                     	</div>
                                         <div class="form-group">
                                         	<input type="password" class="form-control form-control-user"
-                                                    id="pwd" placeholder="비밀번호를 입력하세요" required>
+                                                    id="pwd" name="pwd" placeholder="비밀번호를 입력하세요" required>
                                         </div>
                                         <div class="form-group">
                                 	        <div class="custom-control custom-checkbox small">
@@ -67,14 +67,14 @@
                                             </div>
                                         </div>
                                         <div class="user-btn">
-                                	        <input type="submit" class="btn btn-primary btn-user btn-block" value="로그인" onclick="moveHome();">
+                                	        <input type="submit" class="btn btn-primary btn-user btn-block" value="로그인">
                                             <input type="button" class="btn btn-cancle btn-user btn-block" value="취소" onclick="moveHome();">
                                         </div>
                        	            </div>
                   	            </form>
                                 <hr>
                                 <div class="text-center">
-                                	<a class="small" href="forgot-email.html">이메일 찾기</a>
+                                	<a class="small" href="searchEmail.jsp">이메일 찾기</a>
                                 </div>
                                 <div class="text-center">
                                 	<a class="small" href="forgot-pwd.html">비밀번호 찾기</a>
@@ -103,7 +103,7 @@
     <script>
     	// 로그인 완료 시 홈 화면으로 이동
         function moveHome(){ 
-            location.href = "home.do";
+            location.href = "index.jsp";
         }                             
     </script>
 

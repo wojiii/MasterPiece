@@ -11,4 +11,9 @@ public class CommonController {
 		return "common-form";
 	}	
 	
+	@RequestMapping("project.com")
+	public String test2() {
+		return "project-common-form";
+	}
+	
 }

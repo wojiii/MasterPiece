@@ -10,7 +10,7 @@
 	<div id="wrapper">
 	
 		<!-- SIDEBAR -->
-		<%@include file="../common/main-sidebar.jsp" %>       
+		<%@include file="../common/project-sidebar.jsp" %>       
 	
 		<!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">

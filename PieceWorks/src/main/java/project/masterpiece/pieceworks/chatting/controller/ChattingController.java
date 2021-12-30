@@ -22,7 +22,10 @@ public class ChattingController {
 		return "chattingForm";
 	}
 	
-	
+	@RequestMapping("chatList.ch")
+	public String chatList() {
+		return "chattingList";
+	}
 	
 	
 }

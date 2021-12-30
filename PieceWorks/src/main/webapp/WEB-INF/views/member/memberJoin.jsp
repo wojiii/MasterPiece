@@ -89,7 +89,7 @@
                                     <hr>
                                     
                                     <div class="text-center">
-                                        <a class="small" href="index.jsp">이미 계정이 있습니다!</a>
+                                        <a class="small" href="login.me">이미 계정이 있습니다!</a>
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +119,7 @@
         }    
 
         function cancle(){
-        	location.href = "index.jsp";
+        	location.href = "login.jsp";
         }
         
         $("#submit").on("click", function(){

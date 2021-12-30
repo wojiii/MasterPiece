@@ -14,7 +14,7 @@ public class MemberServiceImpl implements MemberService{
 	private MemberDAO mDAO;
 	
 	@Autowired
-	private SqlSessionTemplate sqlSession;
+	private SqlSessionTemplate sqlSession; 
 
 	@Override
 	public int insertMember(Member m) {
@@ -23,7 +23,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public Member memberLogin(Member m) {
-		return null;
+		return mDAO.memberLogin(sqlSession, m);
 	}
 	
 	

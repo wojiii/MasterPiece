@@ -6,6 +6,20 @@
 		values(#{email}, #{pwd}, #{name}, null, #{phone}, sysdate, default)
 	</insert>
   
+  	<select id="memberLogin" resultMap="memberResultSet">
+  		select * 
+  		from member
+  		where email=#{email} and m_status='Y'
+  	</select>
+  	<resultMap type="Member" id="memberResultSet">
+  		<id column="EMAIL" property="email"/>
+  		<result column="PWD" property="pwd"/>
+  		<result column="NAME" property="name"/>
+  		<result column="NICKNAME" property="nickName"/>
+  		<result column="PHONE" property="phone"/>
+  		<result column="ENROLL_DATE" property="enroll_date"/>
+  		<result column="M_STATUS" property="m_status"/>
+  	</resultMap>
   
   
 </mapper>

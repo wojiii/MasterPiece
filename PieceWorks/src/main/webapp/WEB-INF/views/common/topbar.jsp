@@ -1,5 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8" 
+	pageEncoding="UTF-8" import="project.masterpiece.pieceworks.member.model.vo.Member" %>
+<%
+	 Member loginUser = (Member)session.getAttribute("loginUser");
+%>
 	<!-- Topbar -->
 	<nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -99,7 +102,7 @@
 		<li class="nav-item dropdown no-arrow">
 			<a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
 				data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-				<span class="mr-2 d-none d-lg-inline text-gray-600 small">NICKNAME</span>
+				<span class="mr-2 d-none d-lg-inline text-gray-600 small"><%= loginUser.getNickName() %></span>
 				<img class="img-profile rounded-circle" src="resource/img/undraw_profile.svg">
 			 </a>
 			<!-- Dropdown - User Information -->

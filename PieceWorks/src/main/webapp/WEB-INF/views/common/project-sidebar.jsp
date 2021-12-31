@@ -29,8 +29,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" style="height: 175px;">
                 <img src="resource/img/TitleImg.png" width="175px"> <!--  style="cursor: pointer" onclick="location.href='index.jsp'"-->
-                <div class="sidebar-brand-icon"></div>
-                <div class="sidebar-brand-text mx-3"></div>
+                <div class=></div>
             </a>
 
         <!-- Divider -->

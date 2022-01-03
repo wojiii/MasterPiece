@@ -15,8 +15,8 @@
 <p><button id="chatList">채팅리스트</button></p>
 <p><button onclick="location.href='common.com'">Common Form</button></p>
 <p><button onclick="location.href='project.com'">Project Sidebar</button></p>
-<p><button onclick="location.href='login.me'">Login</button></p>
 <p><button id="chattingDetailForm">chattingDetailForm</button></p>
+<p><button onclick="location.href='loginView.me'">Login</button></p>
 
 </body>
 <script>

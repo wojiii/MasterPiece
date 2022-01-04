@@ -40,4 +40,10 @@
   		set name = #{name}, nickName = #{nickName}, phone = #{phone}
   		where email = #{email}
   	</update>
+  	
+  	<update id="deleteMember">
+  		update member
+  		set m_status = 'N'
+  		where email = #{email}
+  	</update>
 </mapper>

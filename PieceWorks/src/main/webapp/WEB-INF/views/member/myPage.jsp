@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -79,6 +80,9 @@
 							</div>
 							<div class="form-group">
 								<button type="submit" class="btn btn-primary btn-user btn-block">정보수정</button>
+								<c:url var="mdelete" value="mdelete.me">
+									<c:param name="email" value="${ loginUser.email }"/>
+								</c:url>
 								<button type="button" class="btn btn-delete btn-user btn-block" onclick="deleteMember()">회원탈퇴</button>
 							</div>
 						</form>
@@ -91,7 +95,7 @@
 				function deleteMember() {
 					var bool = confirm('정말 탈퇴를 하시겠습니까?');
 					if(bool) {
-						location.href='mdelete.me';
+						location.href='${ mdelete }';
 					}
 				}
 			</script>
@@ -142,21 +146,21 @@
 		</div>
 	</div>
 	<!-- Bootstrap core JavaScript-->
-	<script src="vendor/jquery/jquery.min.js"></script>
-	<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="resource/vendor/jquery/jquery.min.js"></script>
+	<script src="resource/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 	<!-- Core plugin JavaScript-->
-	<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+	<script src="resource/vendor/jquery-easing/jquery.easing.min.js"></script>
 
 	<!-- Custom scripts for all pages-->
-	<script src="js/sb-admin-2.min.js"></script>
+	<script src="resourcejs/sb-admin-2.min.js"></script>
 
 	<!-- Page level plugins -->
-	<script src="vendor/chart.js/Chart.min.js"></script>
+	<script src="resource/vendor/chart.js/Chart.min.js"></script>
 
 	<!-- Page level custom scripts -->
-	<script src="js/demo/chart-area-demo.js"></script>
-	<script src="js/demo/chart-pie-demo.js"></script>
+	<script src="resource/js/demo/chart-area-demo.js"></script>
+	<script src="resource/js/demo/chart-pie-demo.js"></script>
 
 </body>
 </html>

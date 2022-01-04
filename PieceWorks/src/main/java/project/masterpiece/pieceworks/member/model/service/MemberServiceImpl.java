@@ -39,5 +39,10 @@ public class MemberServiceImpl implements MemberService{
 		return mDAO.updateMember(sqlSession, m);
 	}
 
+	@Override
+	public int deleteMember(String email) {
+		return mDAO.deleteMember(sqlSession, email);
+	}
+
 	
 }

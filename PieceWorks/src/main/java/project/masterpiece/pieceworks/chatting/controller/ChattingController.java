@@ -40,17 +40,30 @@ public class ChattingController {
 	@RequestMapping("chattingDetailForm.ch")
 	public ModelAndView chattingDetailForm(@ModelAttribute ChattingMessage c,ModelAndView mv) {
 	
-		ArrayList<ChattingMessage> list = new ArrayList<ChattingMessage>();
-		list = cService.selectChattingMessageList(c);
+		/*public ModelAndView chattingDetailForm(@RequestParam("chatWriter") String chatWriter,
+		@RequestParam("anotherUserId") String anotherUserId,@RequestParam("chatNo") int chatNo,ModelAndView mv) {*/
+	/*채팅 메세지 불러오기
+	 채팅방 번호 , 본인 아이디, 클릭 한 채팅 아이디 가져오기*/
+	/*
+	 * HashMap<Object, Object> map = new HashMap<Object, Object>();
+	 * map.put("chatWriter", chatWriter); map.put("anotherUserId", anotherUserId);
+	 * map.put("chatNo", chatNo);
+	 */
+	
+	
+	ArrayList<ChattingMessage> list = new ArrayList<ChattingMessage>();
+	list = cService.selectChattingMessageList(c);
 
-		if(list != null) {
-			mv.addObject("list",list);
-			mv.setViewName("chattingDetailForm");
-		}else {
-			throw new ChattingException("게시글 전체 조회에 실패하였습니다.");
-		}
-		return mv;
+	if(list != null) {
+		mv.addObject("chatNo",c.getChatNo());
+		mv.addObject("userId",c.getChatWriter());
+		mv.addObject("list",list);
+		mv.setViewName("chattingDetailForm");
+	}else {
+		throw new ChattingException("게시글 전체 조회에 실패하였습니다.");
 	}
+	return mv;
+}
 	
 	
 }

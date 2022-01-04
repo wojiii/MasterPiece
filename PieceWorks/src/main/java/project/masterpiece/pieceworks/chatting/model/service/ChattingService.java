@@ -11,4 +11,5 @@ public interface ChattingService {
 
 	ArrayList<ChattingMessage> selectChattingMessageList(ChattingMessage c);
 
+	int insertChatting(ChattingMessage chatMessage);
 }

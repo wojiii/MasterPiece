@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
-<html>
+<html class="no-js">
 <head>
 <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -89,33 +89,145 @@
 		margin-top:-5px;
 		margin-right:-5px;
 	}
+	
+	.timemargin{
+		margin-right:23px;
+	}
+	.unreadMessage{
+	color:white;
+	border-radius:10px;
+	text-align:center;
+	width:20px;
+	background-color:red;
+	display:inline-block;
+	margin-left:5px;
+	}
+	
+	.unread{
+	display:inline-block;
+	}
+	.chatTitle{
+	display:inline-block;
+	}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.2.0/lodash.js"></script>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
+<script>
+function getChattingList(){
+	
+	
+	$.ajax({
+		url:'getChatList.ch',
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+			
+			$wholeChatList = $("#wholeChatList");
+		    $wholeChatList.html("");
+			if(data.length>0){
+				for(var i in data){
+					$li = $([
+						'<div class="chat_list"  ondblclick="chatDeatilGo('+ data[i].chatNo + ')">'
+                        ,'<div class="chat_people">'
+                        ,'    <div class="chat_img"></div>'
+                        ,'        <div class="chat_ib">'
+                        ,'            <h5 class="innerh5">'
+                        ,'				<div class="chatTitle"></div><div class="unread"></div>'
+                        ,'				<span class="chat_date"><div class="chat_dateDiv"></div><a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"'
+                        ,'				role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'				
+                        ,'            		more'
+                        ,'					</a>'	
+                        ,'        <span class="dropdown-menu dropdown-menu-right animated--fade-in" aria-labelledby="navbarDropdown">'
+                        ,'			<div class="outRoom"></div>'
+                        ,'			<div class="modifyRoom"></div>'
+                        ,'			<div class="deleteRoom"><div>'	
+                        ,'    	</span></span></h5>'
+                        ,'		<p class="chatmeg"></p>'		
+                        ,'</div></div></div>'
+                    ].join(''));   
+                  
+					$li.find(".chat_list").attr("onclick", 'chatDetailGo(' + data[i].chatNo + ')');
+
+                	if(data[i].joinMember.length > 2){
+                		$li.find(".chat_img").html('<img src="https://ptetutorials.com/images/user-profile.png" alt="sunil">');
+                	}else{
+                		$li.find(".chat_img").html('<img src="https://mblogthumb-phinf.pstatic.net/20151212_254/julielove450_1449914547821gAtcQ_PNG/20151212_1850201.png?type=w2" alt="sunil">');
+                	}
+                	
+                	var chatMemStr = "";
+                	if(data[i].chatTitle == null){
+                		for(var j in data[i].joinMember){
+                			if("${ loginUser.email }" != data[i].joinMember[j].chatMember){
+                				chatMemStr += data[i].joinMember[j].memberName + " ";
+                			}
+                		}
+                		$li.find(".chatTitle").text(chatMemStr);
+                	}else{
+                		$li.find(".chatTitle").text(data[i].chatTitle);
+                	}
+                	
+                	if(data[i].unreadCount > 0){
+                		$li.find(".unread").html('<div class="unreadMessage">' + data[i].unreadCount + '</div>');
+                	}
+                	
+                	if(data[i].sendDate >= "${ today }"){
+                		$li.find(".chat_dateDiv").text(data[i].sendTime);
+                	}else{
+                		$li.find(".chat_dateDiv").text(data[i].sendDate);
+                	}
+                	
+                	$li.find(".outRoom").html('<a class="dropdown-item" id="chatExit" data-toggle="modal" data-target="#chatExitModal">나가기</a>');
+                    
+                    if(data[i].joinMember.length > 2 && "${ loginUser.email }" == data[i].chatCreator){
+                    	$li.find('.modifyRoom').html('<a class="dropdown-item" id="chatNameChange" data-toggle="modal" data-target="#chatNameChangeModal">이름수정</a>');
+                    }
+                    
+                    
+                    if("${ loginUser.email }" == data[i].chatCreator){
+                    	$li.find('.deleteRoom').html('<a class="dropdown-item" id="chatDelete" data-toggle="modal" data-target="#chatDeleteModal">삭제</a>');
+                    }
+                    
+                    $li.find(".chatmeg").text(data[i].chatMessage);
+                    
+                    $wholeChatList.append($li);
+				}
+			}else{
+				
+				
+				
+			}
+			
+		},
+		error:function(data){
+			console.log(data);
+		}
+	});
+}
+
+$(function(){
+	getChattingList();
+	
+	setInterval(function(){
+		getChattingList();
+	}, 5000);
+});
+
+
+function chatDeatilGo(num){
+	document.getElementById("chatNumber").value = num;
+	 var newWindow = window.open('chattingDetailForm.ch', '채팅' , 'width=400, height=500, resizable=yes, scrollbars=yes, left=200, top=100');
+	 newWindow.focus();
+	 frm.target="채팅";
+	 frm.submit();
+}
+
+
+</script>
 <body id="page-top">
-
-    <!-- Page Wrapper -->
-<!--     <div id="wrapper">  -->
-
-        
-
-        <!-- Content Wrapper -->
-<!--          <div id="content-wrapper" class="d-flex flex-column">  -->
-
-            <!-- Main Content -->
-<!--              <div id="content"> -->
-
-                
-         
-				<!-- chattingForm -->
-				<!--  <div class="topchatbar">
-					<div>채팅</div>
-					
-				</div>-->
-            
-            <!-- 채팅목록 & 채팅창 -->
-           <!-- <div class="messaging">
-   <div class="inbox_msg">-->
+	<form action="chattingDetailForm.ch" method="post" name="frm">
+	<input type="hidden" id="chatNumber" name="chatNo">
+	</form>
+	
 	<div class="inbox_people">
 	  <div class="headind_srch">
 		<div class="recent_heading">
@@ -138,164 +250,13 @@
 			</div>
 		</div>
 	  </div>
-<!-- 	  <div class="inbox_chat scroll"> -->
-		<div class="chat_list" ondblclick="chatDeatilGo(0)">
-		  <div class="chat_people">
-			<div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-			<div class="chat_ib">
-			  <h5>남나눔 <span class="chat_date">12월 21일<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-                                                    role="button" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                    	more
-                                                </a>
-                                                <span class="dropdown-menu dropdown-menu-right animated--fade-in"
-                                                    aria-labelledby="navbarDropdown">
-                                                    <a class="dropdown-item" id="chatExit" data-toggle="modal" data-target="#chatExitModal">나가기</a>
-                                                    <a class="dropdown-item" id="chatNameChange" data-toggle="modal" data-target="#chatNameChangeModal">이름수정</a>
-                                                   
-                                                    <a class="dropdown-item" id="chatDelete" data-toggle="modal" data-target="#chatDeleteModal">삭제</a>
-                                                </span></span></h5>
-			  <p>뭐해?</p>
-			</div>
-		  </div>
-		</div>
-		<div class="chat_list" ondblclick="chatDeatilGo(1)">
-		  <div class="chat_people">
-			<div class="chat_img"> <img src="https://mblogthumb-phinf.pstatic.net/20151212_254/julielove450_1449914547821gAtcQ_PNG/20151212_1850201.png?type=w2" alt="sunil"> </div>
-			<div class="chat_ib">
-			  <h5>도대담 <span class="chat_date">12월21일 </span></h5>
-			  <p>채팅 다 됐나요?</p>
-			</div>
-		  </div>
-		</div>
-		<div class="chat_list" ondblclick="chatDeatilGo(2)">
-		  <div class="chat_people">
-			<div class="chat_img"> <img src="https://mblogthumb-phinf.pstatic.net/20151212_49/julielove450_1449914543022Ay9Hy_PNG/20151212_1853531.png?type=w2" alt="sunil"> </div>
-			<div class="chat_ib">
-			  <h5>라라 <span class="chat_date">12월21일</span></h5>
-			  <p>와 진짜 어렵다</p>
-			</div>
-		  </div>
-		</div>
-		<div class="chat_list" ondblclick="chatDeatilGo(3)">
-		  <div class="chat_people">
-			<div class="chat_img"> <img src="https://mblogthumb-phinf.pstatic.net/20151212_142/julielove450_1449914543209lVxLD_PNG/20151212_1853471.png?type=w2" alt="sunil"> </div>
-			<div class="chat_ib">
-			  <h5>단체 채팅 <span class="chat_date">12월19일</span></h5>
-			  <p>이러쿵 저러쿵 </p>
-			</div>
-		  </div>
-		</div>
-		<div class="chat_list" ondblclick="chatDeatilGo(4)">
-		<input type="hidden" value="채팅방일련4">
-		  <div class="chat_people">
-			<div class="chat_img"> <img src="https://mblogthumb-phinf.pstatic.net/20151212_169/julielove450_1449914543507Qdsmn_PNG/20151212_1852371.png?type=w2" alt="sunil"> </div>
-			<div class="chat_ib">
-			  <h5>채팅 팀원 <span class="chat_date">12월18일</span></h5>
-			  <p>더 이상 쓸 채팅이 없다 뭔가 길게 쓰고 싶은데 딱히 생각나는게 없네요 ㅎㅎ</p>
-			</div>
-		  </div>
-		</div>
-		<div class="chat_list" ondblclick="chatDeatilGo(5)">
-		<input type="hidden" value="채팅방일련5">
-		  <div class="chat_people">
-			<div class="chat_img"> <img src="https://mblogthumb-phinf.pstatic.net/20151212_169/julielove450_1449914543507Qdsmn_PNG/20151212_1852371.png?type=w2" alt="sunil"> </div>
-			<div class="chat_ib">
-			  <h5>채팅 팀원 <span class="chat_date">12월18일</span></h5>
-			  <p>으하하</p>
-			</div>
-		  </div>
-		</div>
+	  <div id="wholeChatList">
+	</div>
 	  </div>
-<!-- 	</div> -->
-	<!-- <div class="mesgs">
-	  <div class="msg_history">
-		<div class="incoming_msg">
-		  <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-		  <div class="received_msg">
-			<div class="received_withd_msg">
-			  <p>채팅 테스트</p>
-			  <span class="time_date"> 11:01 AM    |    June 9</span></div>
-		  </div>
-		</div>
-		<div class="outgoing_msg">
-		  <div class="sent_msg">
-			<p>오 대박</p>
-			<span class="time_date"> 11:01 AM    |    June 9</span> </div>
-		</div>
-		<div class="incoming_msg">
-		  <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-		  <div class="received_msg">
-			<div class="received_withd_msg">
-			  <p>하이하이</p>
-			  <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
-		  </div>
-		</div>
-		<div class="outgoing_msg">
-		  <div class="sent_msg">
-			<p>ㅇㅋㅇㅋ</p>
-			<span class="time_date"> 11:01 AM    |    Today</span> </div>
-		</div>
-		<div class="incoming_msg">
-		  <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-		  <div class="received_msg">
-			<div class="received_withd_msg">
-			  <p>아무말 적기</p>
-			  <span class="time_date"> 11:01 AM    |    Today</span></div>
-		  </div>
-		</div>
-		<div class="incoming_msg">
-		  <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-		  <div class="received_msg">
-			<div class="received_withd_msg">
-			  <p>...</p>
-			  <span class="time_date"> 11:01 AM    |    Today</span></div>
-		  </div>
-		</div>
-		<div class="incoming_msg">
-		  <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-		  <div class="received_msg">
-			<div class="received_withd_msg">
-			  <p>ㅏㅏㅏㅏㅏㅏㅏㅏ</p>
-			  <span class="time_date"> 11:01 AM    |    Today</span></div>
-		  </div>
-		</div>
-	  </div>
-	  <div class="type_msg">
-		<div class="input_msg_write">
-		  <input type="text" class="write_msg" placeholder="Type a message" />
-		  <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane" aria-hidden="true"></i></button>
-		</div>
-	  </div>
-	  
-	</div>-->
-<!--  </div>
-</div>  -->
-         
-
-                
-                <!-- /.container-fluid -->
-
-<!--              </div>  -->
-            <!-- End of Main Content -->
-
-
-<!--        </div> -->
-        <!-- End of Content Wrapper -->
-
-<!--     </div> -->
-    <!-- End of Page Wrapper -->
-
-	<script>
 		
-	</script>
+		
 
 
-	<script>
-	function chatDeatilGo(num){
-		alert(num);
-	}
-	</script>
     <!-- Scroll to Top Button-->
     <a class="scroll-to-top rounded" href="#page-top">
         <i class="fas fa-angle-up"></i>

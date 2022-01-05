@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 
 import project.masterpiece.pieceworks.chatting.model.dao.ChattingDAO;
+import project.masterpiece.pieceworks.chatting.model.vo.ChattingList;
 import project.masterpiece.pieceworks.chatting.model.vo.ChattingMessage;
 
 @Service("cService")
@@ -29,7 +30,14 @@ public class ChattingServiceImpl implements ChattingService{
 	}
 
 	@Override
+	public ArrayList<ChattingList> selectChattingList(String email) {
+		return cDAO.selectChattingList(sqlSession, email);
+	}
+
+
+	@Override
 	public int insertChatting(ChattingMessage chatMessage) {
 		return cDAO.insertChatting(sqlSession,chatMessage);
 	}
+
 }

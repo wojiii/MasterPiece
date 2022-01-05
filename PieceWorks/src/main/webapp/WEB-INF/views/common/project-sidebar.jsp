@@ -29,8 +29,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" style="height: 175px;">
                 <img src="resource/img/TitleImg.png" width="175px"> <!--  style="cursor: pointer" onclick="location.href='index.jsp'"-->
-                <div class="sidebar-brand-icon"></div>
-                <div class="sidebar-brand-text mx-3"></div>
+                <div class=></div>
             </a>
 
         <!-- Divider -->
@@ -78,7 +77,7 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">DETAILS</h6>
                     <a class="collapse-item" href="#">상세 정보</a>
-                    <a class="collapse-item" href="#">일정 및 캘린더</a>
+                    <a class="collapse-item" onclick='location.href="calendarTest.ca"'>일정 및 캘린더</a>
                     <a class="collapse-item" href="#">채팅</a>
                     <a class="collapse-item" href="#">게시판</a>
                     <a class="collapse-item" href="#">파일함</a>

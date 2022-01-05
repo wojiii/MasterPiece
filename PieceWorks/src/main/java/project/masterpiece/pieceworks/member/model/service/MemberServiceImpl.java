@@ -14,7 +14,7 @@ public class MemberServiceImpl implements MemberService{
 	private MemberDAO mDAO;
 	
 	@Autowired
-	private SqlSessionTemplate sqlSession; 
+	private SqlSessionTemplate sqlSession;
 
 	@Override
 	public int insertMember(Member m) {
@@ -25,6 +25,24 @@ public class MemberServiceImpl implements MemberService{
 	public Member memberLogin(Member m) {
 		return mDAO.memberLogin(sqlSession, m);
 	}
-	
+
+	/*
+	 * @Override public int duplicateEmail(String email) { return
+	 * mDAO.duplicateEmail(sqlSession, email); }
+	 * 
+	 * @Override public Member findEmail(Member m) { return
+	 * mDAO.findEmail(sqlSession, m); }
+	 */
+
+	@Override
+	public int updateMember(Member m) {
+		return mDAO.updateMember(sqlSession, m);
+	}
+
+	@Override
+	public int deleteMember(String email) {
+		return mDAO.deleteMember(sqlSession, email);
+	}
+
 	
 }

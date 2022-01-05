@@ -27,5 +27,9 @@ public class ChattingDAO {
 	}
 
 	
+	public int insertChatting(SqlSessionTemplate sqlSession, ChattingMessage chatMessage) {
+		return sqlSession.insert("chattingMapper.insertChatting",chatMessage);
+	}
+
 
 }

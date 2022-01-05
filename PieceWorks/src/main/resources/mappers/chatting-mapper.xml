@@ -7,7 +7,7 @@
 		from chat_message
 			join member on(chat_writer = email)
 		where chat_no = #{chatNo} 
-		and (chat_writer = ${chatWriter} or chat_writer = ${anotherUserId})
+		order by chat_message_no
 	</select>
 	<resultMap type="ChattingMessage" id="ChattingMessageSet">
 		<id column="CHAT_MESSAGE_NO" property="chatMessageNo"/>
@@ -54,4 +54,9 @@
 	 	<result column="MEMBER_NAME" property="memberName"/>
 	 </resultMap>
 	
+
+	<insert id="insertChatting">
+		insert into chat_message
+		values(SEQ_CMN.NEXTVAL,#{chatMessage},sysdate,#{chatNo},#{chatWriter})
+	</insert>
 </mapper>

@@ -14,4 +14,5 @@ public interface ChattingService {
 
 	ArrayList<ChattingList> selectChattingList(String email);
 
+	int insertChatting(ChattingMessage chatMessage);
 }

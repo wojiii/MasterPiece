@@ -22,7 +22,7 @@ var calendar = $('#calendar').fullCalendar({
                               },
   eventLimitClick           : 'week', //popover
   navLinks                  : true,
-  defaultDate               : moment('2019-05'), //실제 사용시 현재 날짜로 수정
+  defaultDate               : moment(new Date()), //실제 사용시 현재 날짜로 수정
   timeFormat                : 'HH:mm',
   defaultTimedEventDuration : '01:00:00',
   editable                  : true,
@@ -36,7 +36,7 @@ var calendar = $('#calendar').fullCalendar({
   eventLongPressDelay       : 0,
   selectLongPressDelay      : 0,  
   header                    : {
-                                left   : 'today, prevYear, nextYear, viewWeekends',
+                                left   : 'today, prevYear, nextYear',
                                 center : 'prev, title, next',
                                 right  : 'month, agendaWeek, agendaDay, listWeek'
                               },
@@ -57,18 +57,6 @@ var calendar = $('#calendar').fullCalendar({
                                   columnFormat : ''
                                 }
                               },
-  customButtons             : { //주말 숨기기 & 보이기 버튼
-                                viewWeekends : {
-                                  text  : '주말',
-                                  click : function () {
-                                    activeInactiveWeekends ? activeInactiveWeekends = false : activeInactiveWeekends = true;
-                                    $('#calendar').fullCalendar('option', { 
-                                      weekends: activeInactiveWeekends
-                                    });
-                                  }
-                                }
-                               },
-
 
   eventRender: function (event, element, view) {
 
@@ -79,7 +67,7 @@ var calendar = $('#calendar').fullCalendar({
         text: event.title
       }).css({
         'background': event.backgroundColor,
-        'color': event.textColor
+        'color': '#ffffff'
       }),
       content: $('<div />', {
           class: 'popoverInfoCalendar'
@@ -107,11 +95,12 @@ var calendar = $('#calendar').fullCalendar({
   events: function (start, end, timezone, callback) {
     $.ajax({
       type: "get",
-      url: "data.json",
+      url: "eventList.ca",
+      dataType: 'JSON',
       data: {
         // 화면이 바뀌면 Date 객체인 start, end 가 들어옴
-        //startDate : moment(start).format('YYYY-MM-DD'),
-        //endDate   : moment(end).format('YYYY-MM-DD')
+        startDate : moment(start).format('YYYY-MM-DD'),
+        endDate   : moment(end).format('YYYY-MM-DD')
       },
       success: function (response) {
         var fixedDate = response.map(function (array) {

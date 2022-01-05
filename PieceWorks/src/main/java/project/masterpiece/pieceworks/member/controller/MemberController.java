@@ -1,7 +1,5 @@
 package project.masterpiece.pieceworks.member.controller;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -11,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import project.masterpiece.pieceworks.member.model.exception.MemberException;
 import project.masterpiece.pieceworks.member.model.service.MemberService;
@@ -100,6 +99,19 @@ public class MemberController {
 			return "redirect:myPageView.me";
 		} else {
 			throw new MemberException("회원정보 수정에 실패하였습니다.");
+		}
+	}
+	
+	@RequestMapping("mdelete.me")
+	public String deleteMember(@RequestParam("email")String email, SessionStatus session){
+	
+		int result = mService.deleteMember(email);
+		
+		if(result > 0) {
+			session.setComplete();
+			return "redirect:loginView.me";
+		} else {
+			throw new MemberException("회원 탈퇴에 실패하였습니다.");
 		}
 	}
 	

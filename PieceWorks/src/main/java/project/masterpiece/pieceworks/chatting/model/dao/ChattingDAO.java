@@ -21,6 +21,8 @@ public class ChattingDAO {
 		return (ArrayList)sqlSession.selectList("chattingMapper.selectChattingMessageList",c);
 	}
 
-	
+	public int insertChatting(SqlSessionTemplate sqlSession, ChattingMessage chatMessage) {
+		return sqlSession.insert("chattingMapper.insertChatting",chatMessage);
+	}
 
 }

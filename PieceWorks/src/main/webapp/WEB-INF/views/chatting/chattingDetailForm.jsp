@@ -35,10 +35,15 @@
 		.received_msg p{
 			margin: 0px;
 		}
+		#nickNameText{
+			font-size: 10px;
+		}
 	</style>
 	<script type="text/javascript">
-	var name
-var wsocket;
+	var name;
+	var wsocket;
+	var userId = "${userId}";
+	
 	$(document).ready(function() {
 		name = prompt("이름입력");
 		connect();
@@ -55,31 +60,73 @@ var wsocket;
 		wsocket.close();
 	}
 	function onOpen(evt) {
-		console.log("연결되었습니다.");
+		var Now = new Date();
+		var NowTime = Now.getFullYear();
+		NowTime += '/' + Now.getMonth() + 1 ;
+		NowTime += '/' + Now.getDate();
+		NowTime += ' ' + Now.getHours();
+		NowTime += ':' + Now.getMinutes();
+		NowTime += ':' + Now.getSeconds();
+		var userData = {
+				"chatMessage":"ENTER-CHAT",
+				"sendTime":Now,
+				"nickName":name,
+				"chatNo":"${chatNo}",
+				"chatWriter": "${userId}"
+		};
+		let jsonData = JSON.stringify(userData);
+		wsocket.send(jsonData);
 	}
 	 
 	function onMessage(evt) {
-		var data = evt.data;
-		if (data.substring(0, 4) == "msg:") {
-			appendMessage(data.substring(4));
-		}
+		let receive = evt.data.split(",");
+		const data = {
+				"nickName" : receive[0],
+				"sendTime" : receive[1],
+				"message" : receive[2]
+		};
+		console.log(data)
+			appendMessage(data);
+		
 	}
 	function onClose(evt) {
-		appendMessage("연결을 끊었습니다.");
+		console.log("연결을 끊었습니다.");
 	}
 	
 	function send() {
 		var msg = $(".write_msg").val();
-		wsocket.send("msg:"+name+":" + msg);
+		var Now = new Date();
+		var NowTime = Now.getFullYear();
+		NowTime += '/' + Now.getMonth() + 1 ;
+		NowTime += '/' + Now.getDate();
+		NowTime += ' ' + Now.getHours();
+		NowTime += ':' + Now.getMinutes();
+		NowTime += ':' + Now.getSeconds();
+
+		var userData = {
+				"chatMessage":msg,
+				"sendTime":Now,
+				"nickName":name,
+				"chatNo":"${chatNo}",
+				"chatWriter": "${userId}"
+		};
+		let jsonData = JSON.stringify(userData);
+		wsocket.send(jsonData);
 		$(".write_msg").val("");
 	}
 
-	function appendMessage(msg) {
-		console.log(msg.substring(0,3));
-		if(msg.substring(0,3)=="첫번째"){
-			$('.msgArea').append("<div class='outgoing_msg'> <div class='sent_msg'> <p>"+msg+"</p> <span class='time_date'>" +"시간"+"</span> </div>");
+	function appendMessage(data) {
+		var Now = new Date();
+		var NowTime = Now.getFullYear();
+		NowTime += '-' + Now.getMonth() + 1 ;
+		NowTime += '-' + Now.getDate();
+		NowTime += ' ' + Now.getHours();
+		NowTime += ':' + Now.getMinutes();
+		NowTime += ':' + Now.getSeconds();
+		if(data.nickName==name){
+			$('.msgArea').append("<div class='outgoing_msg'> <div class='sent_msg'> <p>" + data.message+"</p> <span class='time_date'>" +NowTime+"</span> </div>");
 		}else{
-			$('.msgArea').append("<div class='incoming_msg'> <div class='incoming_msg_img'> <img src='https://ptetutorials.com/images/user-profile.png' alt='sunil'> </div> <div class='received_msg'> <div class='received_withd_msg'> <p>" +msg+"</p> <span class='time_date'>" +"시간"+"</span></div> </div> </div>");
+			$('.msgArea').append("<div class='incoming_msg'> <div class='incoming_msg_img'> <img src='https://ptetutorials.com/images/user-profile.png' alt='sunil'> </div> <div class='received_msg'> <div class='received_withd_msg'><p id='nickNameText'>"+data.nickName +"</p> <p>"+ data.message+"</p> <span class='time_date'>" +NowTime+"</span></div> </div> </div>");
 		}
 		var chatAreaHeight = $(".msg_history").height();
 		var maxScroll = $(".msgArea").height() - chatAreaHeight;
@@ -117,7 +164,7 @@ var wsocket;
 	  <div class="msgArea">
 	  <c:forEach var="c" items="${list }">
 	 	 <c:choose>
-		  	<c:when test="${c.chatWriter eq 'aaa@naver.com'}">
+		  	<c:when test="${c.chatWriter eq userId}">
 		  		<div class="outgoing_msg">
 				  <div class="sent_msg">
 					<p>${c.chatMessage }</p>
@@ -128,7 +175,7 @@ var wsocket;
 		  	<div class="incoming_msg">
 		<div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
 		  <div class="received_msg">
-			<div class="received_withd_msg">
+			<div class="received_withd_msg"><p id="nickNameText">${c.nickName }</p>
 			  <p>${c.chatMessage }</p>
 			  <span class="time_date">${c.sendTime }</span></div>
 		  </div>

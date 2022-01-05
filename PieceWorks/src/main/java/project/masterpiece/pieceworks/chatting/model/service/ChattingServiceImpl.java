@@ -28,4 +28,8 @@ public class ChattingServiceImpl implements ChattingService{
 		return cDAO.selectChattingMessageList(sqlSession,c);
 	}
 
+	@Override
+	public int insertChatting(ChattingMessage chatMessage) {
+		return cDAO.insertChatting(sqlSession,chatMessage);
+	}
 }

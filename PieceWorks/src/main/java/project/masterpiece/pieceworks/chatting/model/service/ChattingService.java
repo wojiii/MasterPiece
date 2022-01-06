@@ -22,4 +22,6 @@ public interface ChattingService {
 	int insertChatJoin(ArrayList<String> eList);
 
 	int insertFirstMeg(HashMap<String, String> map);
+
+	int updateChatTitle(ChattingList cl);
 }

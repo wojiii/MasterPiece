@@ -154,6 +154,23 @@ public class ChattingController {
 		return mv;
 	}
 	
+	@RequestMapping("updateChatTitle.ch")
+	public ModelAndView updateChatTitle(@RequestParam("chatNo") int chatNo,
+										@RequestParam("chatTitle") String chatTitle,
+										ModelAndView mv) {
+		ChattingList cl = new ChattingList();
+		cl.setChatNo(chatNo);
+		cl.setChatTitle(chatTitle);
+		
+		int result = cService.updateChatTitle(cl);
+		if(result>0) {
+			mv.setViewName("redirect:chatList.ch");
+		}else {
+			throw new ChattingException("실패하였습니다.");
+		}
+		
+		return mv;
+	}
 	
 	@RequestMapping("chattingDetailForm.ch")
 	public ModelAndView chattingDetailForm(@ModelAttribute ChattingMessage c,ModelAndView mv) {

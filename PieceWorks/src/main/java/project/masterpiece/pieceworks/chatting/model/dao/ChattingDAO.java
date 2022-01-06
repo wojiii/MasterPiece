@@ -44,5 +44,9 @@ public class ChattingDAO {
 		return sqlSession.insert("chattingMapper.insertFirstMeg", map);
 	}
 
+	public int updateChatTitle(SqlSessionTemplate sqlSession, ChattingList cl) {
+		return sqlSession.update("chattingMapper.updateChatTitle", cl);
+	}
+
 
 }

@@ -56,6 +56,11 @@ public class ChattingServiceImpl implements ChattingService{
 		return cDAO.insertFirstMeg(sqlSession, map);
 	}
 
+	@Override
+	public int updateChatTitle(ChattingList cl) {
+		return cDAO.updateChatTitle(sqlSession, cl);
+	}
+
 	
 
 }

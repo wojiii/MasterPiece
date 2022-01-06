@@ -180,8 +180,8 @@ function getChattingList(){
                 	$li.find(".outRoom").html('<a class="dropdown-item" id="chatExit" data-toggle="modal" data-target="#chatExitModal">나가기</a>');
                     
                     if(data[i].joinMember.length > 2 && "${ loginUser.email }" == data[i].chatCreator){
-                    	$li.find('.modifyRoom').html('<a class="dropdown-item" id="chatNameChange" data-toggle="modal" data-target="#chatNameChangeModal">이름수정</a>');
-                    }
+                    	$li.find('.modifyRoom').html('<a class="dropdown-item" id="chatNameChange" data-toggle="modal" data-target="#chatNameChangeModal"  onclick="modifyRoomName(' + data[i].chatNo + ', `' + data[i].chatTitle + '`)"' + '>이름수정</a>');
+                    }																																						
                     
                     
                     if("${ loginUser.email }" == data[i].chatCreator){
@@ -224,7 +224,31 @@ function chatDeatilGo(num){
 	 frm.submit();
 }
 
+function modifyRoomName(num, title){
+	if(title == 'undefined'){
+		document.getElementById("exampleModalLabelchange").value = '새로운 채팅방 이름 입력';
+	}else{
+		document.getElementById("exampleModalLabelchange").value = title;
+	}
+	
+	document.getElementById("chatNumber").value=num;
 
+	//if(yesorno == true){
+	//	location.href="chattingInvite.ch?emails="+chk_id+"&roomName="+roomName+"&memberNames="+memberName;
+	//	alert("채팅방이 생성되었습니다.");
+	//}
+}
+
+function updateChatName(){
+	var chatNum = document.getElementById("chatNumber").value;
+	var chatTitle = document.getElementById("exampleModalLabelchange").value;
+	
+	var yesorno = confirm(chatTitle + "로(으로) 채팅방 이름을 변경하시겠습니까?");
+	if(yesorno == true){
+	location.href="updateChatTitle.ch?chatNo="+chatNum+"&chatTitle="+chatTitle;
+	}
+	
+}
 </script>
 <body id="page-top">
 	<form action="chattingDetailForm.ch" method="post" name="frm">
@@ -376,6 +400,7 @@ function chatDeatilGo(num){
 	                		var yesorno = confirm("입력한 정보로 채팅방을 생성하시겠습니까?");
 	                		if(yesorno == true){
 	                			location.href="chattingInvite.ch?emails="+chk_id+"&roomName="+roomName+"&memberNames="+memberName;
+	                			alert("채팅방이 생성되었습니다.");
 	                		}
 	                	}
 	                </script>
@@ -416,11 +441,11 @@ function chatDeatilGo(num){
 	                </div>
 	                <div class="input-group">
 	                            <input type="text" class="form-control bg-light border-0 small" placeholder="채팅방 이름..."
-	                                aria-label="Search" aria-describedby="basic-addon2" value="채팅방 이름">
+	                                aria-label="Search" aria-describedby="basic-addon2" value="채팅방 이름" id="exampleModalLabelchange">
 	                        </div>
 					<div class="modal-footer">
-	                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-	                    <a class="btn btn-primary" href="login.html">나가기</a>
+	                    <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
+	                    <a class="btn btn-primary" onclick="updateChatName();">수정</a>
 	                </div>
 	               
 	            </div>

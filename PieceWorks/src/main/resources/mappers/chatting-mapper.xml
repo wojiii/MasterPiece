@@ -59,4 +59,21 @@
 		insert into chat_message
 		values(SEQ_CMN.NEXTVAL,#{chatMessage},sysdate,#{chatNo},#{chatWriter})
 	</insert>
+	
+	<insert id="insertChatRoom">
+		insert into chat_room
+		values(SEQ_CHATROOM.NEXTVAL,DEFAULT,#{roomName},#{userEmail},#{projectNo},sysdate)
+	</insert>
+	
+	<update id="insertChatJoin" parameterType="java.util.List">
+		<foreach collection="list" item="mem" open="INSERT ALL" close="select * from dual" separator=" ">
+			into chat_join values
+			(SEQ_CHATROOM.currval, #{mem}, sysdate - (INTERVAL '5' SECOND))
+		</foreach>
+	</update>
+	
+	<insert id="insertFirstMeg">
+		insert into chat_message
+		values(SEQ_CMN.NEXTVAL, #{firstMessage},SYSDATE,SEQ_CHATROOM.currval,#{creator})
+	</insert>
 </mapper>

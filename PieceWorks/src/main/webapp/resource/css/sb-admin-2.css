@@ -2392,6 +2392,17 @@ fieldset:disabled a.btn {
   box-shadow: 0 0 0 0.2rem rgba(105, 136, 228, 0.5);
 }
 
+.btn-cancle{
+  color:#fff;
+  background-color:#D4D4D4;
+  border-color:#fff;
+}
+.btn-cancle:hover{
+  color:#fff;
+  background-color:#a7a5a5;
+  border-color:#e6e6e6;
+}
+
 .btn-secondary {
   color: #fff;
   background-color: #858796;
@@ -2540,9 +2551,20 @@ fieldset:disabled a.btn {
   box-shadow: 0 0 0 0.2rem rgba(247, 203, 91, 0.5);
 }
 
+.btn-delete{
+  color:#fff;
+  background-color:#D4D4D4;
+  border-color:#fff;
+}
+.btn-delete:hover{
+  color:#fff;
+  background-color:#a7a5a5;
+  border-color:#e6e6e6;
+}
+
 .btn-danger {
   color: #fff;
-  background-color: #e74a3b;
+  background-color: #9f9d9d;
   border-color: #e74a3b;
 }
 
@@ -7771,7 +7793,7 @@ button.bg-dark:focus {
 
 .mt-5,
 .my-5 {
-  margin-top: 3rem !important;
+  margin-top: 8rem !important;
 }
 
 .mr-5,

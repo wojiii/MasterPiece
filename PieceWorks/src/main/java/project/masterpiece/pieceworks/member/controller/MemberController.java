@@ -2,7 +2,7 @@ package project.masterpiece.pieceworks.member.controller;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -195,14 +195,14 @@ public class MemberController {
 		if(member == null) {
 			throw new MemberException("일치하는 회원 정보가 없습니다.");
 		} 
-			int random =  (int)(Math.random() * 1000000) + 1;
-			sendEmail(member.getEmail(), random);
+		int random =  (int)(Math.random() * 1000000) + 1;
+		sendEmail(member.getEmail(), random);
 			
-			mv.addObject("random", random);
-			mv.addObject("email", m.getEmail());
-			mv.setViewName("pwdCode");
+		mv.addObject("random", random);
+		mv.addObject("email", m.getEmail());
+		mv.setViewName("pwdCode");
 			
-			return mv;
+		return mv;
 	}
 	
 	// 인증번호
@@ -215,24 +215,17 @@ public class MemberController {
 	}
 	
 	// 비밀번호 재설정
-	@RequestMapping("updatePwd.me")
-	public String updatePwd(@ModelAttribute Member m, HttpServletRequest reuqest) {
+	@RequestMapping(value="updatePwd.me", method=RequestMethod.POST)
+	public String updatePwd(@ModelAttribute Member m, HttpSession session) {
 		
 		m.setPwd(bcrypt.encode(m.getPwd()));
 		
 		int result = mService.updatePwd(m);
 		
-		System.out.println(m);
-
 		if(result > 0) {
 			return "redirect:loginView.me";
 		} else {
 			throw new MemberException("비밀번호 재설정에 실패하였습니다.");
 		}
 	}
-	
-
-	
-	
-	
 }
